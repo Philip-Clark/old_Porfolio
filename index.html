@@ -1,0 +1,698 @@
+<!-- 
+
+
+
+Author    :   Philip Clark
+Date      :   1/20/2022
+Class     :   CIT 253 (Data Driven Web Design)
+Professor :   Mr. Madras 
+
+
+      
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Philip Clark</title>
+
+    <!-- Jquery Import for scroll based fades -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <!-- javascript -->
+    <!-- 
+
+
+      - Creates a custom element H- which is used to highlight text in orange
+
+      - Uses the .hidden and .shown classes to animate the .Fade class based on visibility 
+        (if the container top is above or below the window bottom)
+
+      - Fades the .to_top class button based on scroll position 
+        (if the scroll position is greater than one full screen height)
+
+
+     -->
+    <script>
+      // Create a custom element for highlights
+      document.createElement('H-');
+
+      // run after load
+      $(window).on('load', function () {
+        // call anonymous function on scroll
+        $(window)
+          .scroll(function () {
+            // get the bottom of the screen
+            var screen_bottom = $(this).scrollTop() + $(this).innerHeight();
+
+            // The scroll position is greater than the window height
+            if ($(this).scrollTop() > $(this).innerHeight()) {
+              //Display the to_top button via styled classes
+              $('.to_top').addClass('shown');
+              $('.to_top').removeClass('hidden');
+            }
+            // The scroll position is less than the window height
+            else {
+              //Hide the to_top button via styled classes
+              $('.to_top').addClass('hidden');
+              $('.to_top').removeClass('shown');
+            }
+
+            // For each element with the .Fade class
+            $('.Fade').each(function () {
+              //Get the top pos of the element
+              var item_top = $(this).offset().top;
+
+              // Check if the top is greater than screen bottom
+              if (item_top > screen_bottom) {
+                // Show the element via styled classes
+                $(this).addClass('hidden');
+                $(this).removeClass('shown');
+              }
+              // Check if the top is less than screen bottom
+              else if (item_top < screen_bottom) {
+                // Show the element via styled classes
+                $(this).addClass('shown');
+                $(this).removeClass('hidden');
+              }
+            });
+          })
+          .scroll();
+      });
+    </script>
+
+    <!-- 
+      
+      Internal CSS
+    
+    -->
+    <style>
+      /* Import the Roboto font */
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      body::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Hide the Scroll bar for other browsers */
+      body {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+      }
+
+      /* Apply a smooth scroll behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Style selections with a light grey background */
+      ::selection {
+        background-color: #2a2a2a;
+      }
+
+      /* Style the body, and include default styling to be inherited */
+      body {
+        /* Misc Styling */
+        cursor: default;
+        padding: 0% 0%;
+        margin: 0;
+        background-color: #212121;
+        display: block;
+
+        /* Text Styling */
+        font-family: Roboto;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 40px;
+        line-height: 1.5;
+        color: #e5e5e5;
+        align-items: center;
+        align-content: center;
+        text-align: justify;
+        letter-spacing: 0.3em;
+        text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Links */
+      a {
+        color: #e5e5e5;
+        text-decoration: none;
+      }
+
+      /* Areas (Skills, About) */
+      .Area {
+        margin: 20% 10%;
+      }
+
+      /* Heading 1 */
+      h1 {
+        font-size: 40px;
+        color: #e5e5e5;
+      }
+
+      /* Heading 2*/
+      h2 {
+        font-variant-caps: all-small-caps;
+
+        font-size: 30px;
+        color: #fe8b4a;
+      }
+
+      /* Heading 3 */
+      h3 {
+        font-variant-caps: all-small-caps;
+        font-size: 20px;
+        color: #e5e5e5;
+      }
+
+      /* Heading paragraph and h4 styling */
+      p,
+      h4 {
+        font-size: 16px;
+        color: #e5e5e5;
+        letter-spacing: 0.2em;
+        line-height: 2;
+        margin: 0;
+      }
+
+      /* Name in the Hero section */
+      #Name {
+        margin: 0;
+      }
+
+      /* Occupation in the Hero section */
+      #Occupation {
+        margin: 0;
+        color: #fe8b4a;
+      }
+
+      /* The 2 sections under Skills */
+      .Skills li {
+        margin: 10% 0%;
+      }
+
+      /* Custom element for Highlights */
+      H- {
+        color: #fe8b4a;
+      }
+
+      /* Nav Bar */
+      nav {
+        /* Animate in after 1s for a duration of 0.5s */
+        animation: navDown 0.5s ease-in-out 1s;
+        animation-fill-mode: forwards;
+
+        /* Misc Styling */
+        margin: 0;
+        padding: 5px;
+        top: 0px;
+        background-color: #1b1b1b;
+
+        /* Text Styling */
+        font-variant-caps: all-small-caps;
+        transform: translateY(-100%);
+        font-size: 16px;
+        letter-spacing: 0.5em;
+        line-height: 3;
+        text-align: center;
+      }
+
+      /* To_top button */
+      .to_top {
+        /* Transition */
+        transition: all 0.2s cubic-bezier(0.66, 1.25, 0.86, 1.23);
+
+        /* Text */
+        text-align: center;
+        line-height: 1.5;
+        letter-spacing: 0;
+        color: #212121;
+        font-weight: bolder;
+        border: none;
+
+        /* Misc */
+        z-index: 10;
+        width: 50px;
+        height: 50px;
+        bottom: 30px;
+        border-radius: 50%;
+        background-color: #fe8b4a;
+        margin: auto;
+        position: fixed;
+        right: 30px;
+      }
+
+      /* To_top button hover*/
+      .to_top:hover {
+        transform: scale(1.1);
+      }
+
+      /* To_top button Click*/
+      .to_top:focus {
+        transform: scale(0.9);
+      }
+
+      /* Hero Section */
+      #hero {
+        width: 80%;
+        align-items: start;
+        margin: 10% auto 15% auto;
+        text-align: center;
+      }
+
+      /* Hero Text div */
+      #hero div {
+        margin-bottom: 15%;
+      }
+
+      /* Image (Hero img is the single image on site) */
+      img {
+        width: 100%;
+        animation-delay: 0.15s;
+
+        /* Style the alt text that appears if the picture doesn't load */
+        letter-spacing: normal;
+        margin: auto;
+        text-align: center;
+        font-size: x-small;
+        color: #ffffff6e;
+      }
+
+      /* Unordered List */
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Fading elements. Fade in and out on visibility */
+      .Fade {
+        transition: 0.9s all cubic-bezier(0, 0.24, 0.4, 1.04) 0.1s;
+      }
+
+      /* Hidden class facilitates Fading */
+      .hidden {
+        transform: translateY(10px);
+        opacity: 0%;
+      }
+
+      /* Shown class facilitates Fading */
+      .shown {
+        transform: translateY(0px);
+        opacity: 100%;
+      }
+
+      /* Items that fade in once (Hero items) */
+      .oneShotFade {
+        opacity: 0%;
+        animation: fadein 0.5s cubic-bezier(0, 0.24, 0.4, 1.04);
+        animation-fill-mode: forwards;
+      }
+
+      /* List items */
+      li {
+        text-decoration: none;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Nav links */
+      nav a {
+        padding: 10%;
+        text-align: center;
+      }
+
+      /* Footer */
+      footer {
+        /* Misc Styling */
+        background-color: #1b1b1b;
+        height: auto;
+        padding: 10% 5% 10% 5%;
+
+        /* Text Styling */
+        font-variant-caps: all-small-caps;
+        text-align: center;
+      }
+
+      /* Footer Text */
+      footer p {
+        margin-bottom: 5%;
+      }
+
+      /* Paragraph and language list under Skills */
+      .skill_grid {
+        margin-bottom: 30%;
+      }
+
+      /* Div holds language lists and Title under Skills */
+      .skill_grid div {
+        margin-top: 5%;
+      }
+
+      /* Title for Language List */
+      .skill_grid h4 {
+        text-align: left;
+        margin-right: 5%;
+      }
+
+      /* Language list */
+      .skill_grid ul {
+        display: block;
+        width: fit-content;
+        flex-basis: 100%;
+        text-align: left;
+      }
+
+      /* list Items in the Language list */
+      .skill_grid ul li {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Paragraph in About Me section */
+      #About p {
+        line-height: 2;
+      }
+
+      /* Animations */
+
+      /* Fade in animation for one_shot elements (Hero items) */
+      @keyframes fadein {
+        from {
+          opacity: 0%;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 100%;
+          transform: translateY(0px);
+        }
+      }
+
+      /* Nav bar animation */
+      @keyframes navDown {
+        from {
+          opacity: 100%;
+        }
+        to {
+          opacity: 100%;
+          transform: translateY(0px);
+        }
+      }
+
+      /*
+
+      Tablet Break point
+
+      */
+      @media (min-width: 600px) {
+        /* Hero img */
+        img {
+          width: 80%;
+        }
+
+        /* Nav bar */
+        nav {
+          text-align: center;
+          margin: 0 auto;
+        }
+
+        /* Nav links */
+        nav a {
+          text-align: center;
+          align-self: center;
+        }
+
+        /* Hero section */
+        #hero {
+          margin: 5% auto 10% auto;
+        }
+
+        /* Hero text */
+        #hero div {
+          margin-bottom: 10%;
+        }
+
+        /* Areas (Skill, About) */
+        .Area {
+          margin: 30% 5%;
+        }
+      }
+
+      /*
+
+      Desktop Breakpoint
+
+      */
+      @media (min-width: 900px) {
+        /* Hero Section */
+        #hero {
+          width: 70%;
+          display: grid;
+          grid-template-columns: 50% 50%;
+          align-items: start;
+          margin: 5% auto 15% auto;
+          text-align: left;
+        }
+
+        /* Nav bar */
+        nav {
+          text-align: left;
+          padding-left: 15%;
+        }
+
+        /* Hero Text */
+        #hero div {
+          margin-top: 25%;
+        }
+
+        /* Nav links */
+        nav a {
+          padding: 0%;
+          padding-right: 50px;
+        }
+
+        /* Paragraph and language list under Skills */
+        .skill_grid {
+          display: grid;
+          grid-template-columns: 70% 5%;
+          column-gap: 5%;
+        }
+
+        /* Language list */
+        .skill_grid ul {
+          display: block;
+          width: fit-content;
+          text-align: left;
+        }
+
+        /* list Items in the Language list */
+        .skill_grid ul li {
+          margin-bottom: 10%;
+        }
+
+        /* Areas (Skill, About) */
+        .Area {
+          margin: 10% 25%;
+        }
+
+        /* Paragraph in About Me section */
+        #About p {
+          line-height: 3;
+        }
+
+        /* Footer */
+        footer {
+          background-color: #1b1b1b;
+          height: 50px;
+          display: grid;
+          grid-template-columns: auto auto;
+          padding: 2% 30% 2% 30%;
+          justify-content: space-between;
+        }
+      }
+    </style>
+  </head>
+
+  <!-- 
+    
+    Body HTML 
+  
+  -->
+  <body>
+    <!-- 
+
+      to top Button
+    
+    -->
+    <a href="#nav" class="hidden to_top"> ^ </a>
+    <!-- 
+      
+      Nav Bar with links to sections
+
+     -->
+    <nav id="nav">
+      <a href="#Skills">Skills</a>
+      <a href="#About">About</a>
+    </nav>
+    <!-- 
+      
+      Hero section, (Name, Occupation, Img) 
+    
+    -->
+    <div id="hero" class="Area">
+      <!-- Name, Occupation -->
+      <div>
+        <h1 class="oneShotFade" style="animation-delay: 0.3s" id="Name">Philip Clark</h1>
+        <h2 class="oneShotFade" style="animation-delay: 0.32s" id="Occupation">Developer</h2>
+      </div>
+      <!-- Image -->
+      <img alt="Profile picture of Philip Clark" class="oneShotFade" src="Profile.png" />
+    </div>
+    <!-- 
+      
+      Divider Line 
+    
+    -->
+    <div class="Fade">
+      <svg style="width: 100vw; display: block" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <path
+          stroke-width="2"
+          id="SkillsLine"
+          d="m0,74 l0.5,0 l50.5,-48 l60,51 l60,-73 l60,80c0.44328,0.04621 22.44328,-56.95379 22.44328,-53.95379 l40.27836,44.9769 l100000.27836,-1.02311"
+          opacity="NaN"
+          stroke="#fe8b4a"
+          fill="none"
+        />
+      </svg>
+    </div>
+    <!-- 
+      
+      Skills section 
+    
+    -->
+    <div class="Fade Area">
+      <h2 class="Fade">Skills</h2>
+      <ul class="Skills" id="Skills">
+        <!-- 
+          
+          Android SKill 
+        
+        -->
+        <li class="Fade" id="Android_Skill">
+          <!-- Title -->
+          <h3 class="Fade">Android</h3>
+          <!-- Content -->
+          <div class="skill_grid">
+            <!-- Paragraph -->
+            <p class="Fade">
+              I've spent <H->two years</H-> developing for <H->Android</H->. I am familiar with most
+              of the industry standard development environments such as
+              <H->Android studio</H-> (Kotlin and Dart) and
+              <H->Microsoft Visual studio</H-> (Xamarin and Java). I have published to the
+              <H->Google Play Store</H-> multiple times and can handle Keystores and the Google
+              pipeline
+            </p>
+            <!-- List of languages Known in area -->
+            <div class="Fade">
+              <h4><H->Languages</H-></h4>
+              <ul>
+                <li><p>Kotlin</p></li>
+                <li><p>Java</p></li>
+                <li><p>Dart</p></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <!-- 
+
+          Web SKill 
+        
+        -->
+        <li id="Web_Skill">
+          <!-- Title -->
+          <h3 class="Fade">Web</h3>
+          <!-- Content -->
+          <div class="skill_grid">
+            <!-- Paragraph -->
+            <p class="Fade">
+              I've been developing websites for just <H->over two years</H->, and am rapidly
+              building confidence and knowledge. I am <H->comfortable</H-> with all the
+              <H->major site builders</H-> and can build a site from the ground up. My favorite type
+              of sites are <H->unique brand specific sites</H->. I love to convey the
+              <H->brand atmosphere</H-> in a website and ensure <H->visitor satisfaction</H->.
+            </p>
+            <!-- List of languages Known in area -->
+            <div class="Fade">
+              <h4><H->Languages</H-></h4>
+              <ul>
+                <li><p>HTML/CSS</p></li>
+                <li><p>JavaScript</p></li>
+                <li><p>PHP</p></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- 
+      
+      Divider Line 
+    
+    -->
+    <div class="Fade">
+      <svg
+        style="width: 100vw; display: block; transform: scale(-1)"
+        width="100%"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-width="2"
+          id="line"
+          d="m0,74 l0.5,0 l50.5,-48 l60,51 l60,-73 l60,80c0.44328,0.04621 22.44328,-56.95379 22.44328,-53.95379 l40.27836,44.9769 l100000.27836,-1.02311"
+          opacity="NaN"
+          stroke="#fe8b4a"
+          fill="none"
+        />
+      </svg>
+    </div>
+    <!-- 
+
+      About Me Area
+
+  
+    -->
+    <div id="About" class="Area">
+      <!-- Title -->
+      <h2 class="Fade">About Me</h2>
+      <!-- Paragraph -->
+      <p class="Fade">
+        My name is <H->Philip Clark</H->; I am 20 and live about 30 minutes south of
+        <H->Elizabethtown, Kentucky</H->. I am currently pursuing an associate's degree in
+        programming. I have been programming for <H->seven years</H-> now, with my first steps being
+        in video game development. While I still have a passion for developing games, I have turned
+        my career towards <H->web development</H-> and <H->software development</H->. I am familiar
+        with all the major website builders and can build a website from the ground up. I also have
+        experience making mobile apps. Currently, I am working on a time-management app with a slick
+        modern UI. Aside from programming, <H->I love video gaming</H->, with Forza Horizon 5 being
+        my current favorite. I also enjoy physical <H->exercise and nature</H->.
+      </p>
+    </div>
+    <!-- 
+
+
+      Footer
+
+     -->
+    <footer>
+      <!-- Name, Copyright -->
+      <p>Philip Clark ©2022</p>
+      <!-- Mail link -->
+      <p><a href="mailto:Pclark0079@kctcs.edu">PClark0079@kctcs.edu</a></p>
+    </footer>
+  </body>
+</html>
